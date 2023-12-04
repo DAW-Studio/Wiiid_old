@@ -1,4 +1,5 @@
 import cwiid
+import time
 import json
 import os
 
@@ -22,6 +23,8 @@ class Wiiid:
         for i in range(5):
             if self.connect():
                 break
+        time.sleep(1)
+        self.wii.rpt_mode = cwiid.RPT_BTN
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
