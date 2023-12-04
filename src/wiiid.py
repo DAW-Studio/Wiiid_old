@@ -1,4 +1,5 @@
 import cwiid
+import drivers
 import time
 import json
 import os
@@ -7,6 +8,8 @@ from strhid import hid
 
 from zero_hid import Keyboard, KeyCodes
 keyboard = Keyboard()
+
+display = drivers.Lcd()
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -20,10 +23,14 @@ class Button:
 
 class Wiiid:
     def __init__(self) -> None:
+        display.lcd_display_string("Wiiid", 1)
         for i in range(5):
+            display.lcd_display_string(f"Attempts: {i}", 2)
             if self.connect():
                 break
+        display.lcd_display_string("Connected", 2)
         time.sleep(1)
+        self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.buttons = {
             "a": Button(cwiid.BTN_A),
@@ -70,6 +77,12 @@ class Wiiid:
             keyboard.press([hid[mod]], hid[key], release)
         except KeyError as e:
             print(e)
+
+
+    def rumble(self, seconds:float=0.3):
+        self.wii.rumble = 1
+        time.sleep(seconds)
+        self.wii.rumble = 0
 
 
     def connect(self):
