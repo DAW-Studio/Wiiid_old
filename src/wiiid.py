@@ -19,7 +19,9 @@ class Button:
 
 class Wiiid:
     def __init__(self) -> None:
-        self.connect()
+        for i in range(5):
+            if self.connect():
+                break
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
