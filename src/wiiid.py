@@ -1,12 +1,13 @@
-import platform
+import cwiid
+import json
+import os
 
-if platform.system() == "Darwin":
-    import devwii as cwiid
-    dev = True
-else:
-    import cwiid
-    dev = False
+from strhid import hid
 
+from zero_hid import Keyboard, KeyCodes
+keyboard = Keyboard()
+
+DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Button:
     def __init__(self, ID:int, value:int=0, holdtime:float=-1):
@@ -32,14 +33,15 @@ class Wiiid:
             "1": Button(cwiid.BTN_1),
             "2": Button(cwiid.BTN_2)
         }
+        with open(f"{DIR}/config.json") as f:
+            self.config = json.load(f)
 
 
     def run(self):
         while True:
-            if dev: self.wii.update()
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
-                if btnState == self.buttons[btn].ID:
+                if (btnState & self.buttons[btn].ID):
                     if self.buttons[btn].value == 0:
                         self.button_pressed(btn)
                 elif self.buttons[btn].value == 1:
@@ -50,9 +52,19 @@ class Wiiid:
         print(f"{btn} pressed")
         self.buttons[btn].value = 1
 
+
     def button_released(self, btn):
         print(f"{btn} released")
         self.buttons[btn].value = 0
+        self.act("tap", btn)
+
+
+    def act(self, action, btn):
+        try:
+            mod, key, release = self.config[action][btn]
+            keyboard.press([hid[mod]], hid[key], release)
+        except KeyError as e:
+            print(e)
 
 
     def connect(self):
