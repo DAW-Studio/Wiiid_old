@@ -28,7 +28,7 @@ class Wiiid:
             display.lcd_display_string(f"Attempts: {i}", 2)
             if self.connect():
                 break
-        display.lcd_display_string("Connected", 2)
+        display.lcd_display_string("Connected  ", 2)
         time.sleep(1)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN
@@ -61,21 +61,23 @@ class Wiiid:
 
 
     def button_pressed(self, btn):
-        print(f"{btn} pressed")
         self.buttons[btn].value = 1
 
 
     def button_released(self, btn):
-        print(f"{btn} released")
         self.buttons[btn].value = 0
         self.act("tap", btn)
 
 
     def act(self, action, btn):
+        display.lcd_clear()
+        display.lcd_display_string(f"{action} {btn}", 1)
         try:
             mod, key, release = self.config[action][btn]
             keyboard.press([hid[mod]], hid[key], release)
+            display.lcd_display_string(f"{mod} {key}", 2)
         except KeyError as e:
+            display.lcd_display_string("Not Mapped", 2)
             print(e)
 
 
