@@ -1,6 +1,6 @@
 import sys
 import cwiid
-import drivers
+# import drivers
 import time
 import json
 import os
@@ -10,7 +10,7 @@ from strhid import hid
 from zero_hid import Keyboard, KeyCodes
 keyboard = Keyboard()
 
-display = drivers.Lcd()
+# display = drivers.Lcd()
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -24,20 +24,20 @@ class Button:
 
 class Wiiid:
     def __init__(self) -> None:
-        display.lcd_backlight(1)
-        display.lcd_display_string("Wiiid v0.1", 1)
-        display.lcd_display_string(f"Connecting", 2)
+        # display.lcd_backlight(1)
+        # display.lcd_display_string("Wiiid v0.1", 1)
+        # display.lcd_display_string(f"Connecting", 2)
         connected = False
         for i in range(5):
             if self.connect():
                 connected = True
                 break
         if connected:
-            display.lcd_display_string("Connected ", 2)
+            # display.lcd_display_string("Connected ", 2)
         else:
             sys.exit()
         time.sleep(1)
-        display.lcd_backlight(0)
+        # display.lcd_backlight(0)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.buttons = {
@@ -99,14 +99,14 @@ class Wiiid:
 
     def act(self, action, btn):
         btn = ",".join(btn)
-        display.lcd_clear()
-        display.lcd_display_string(f"{action} {btn}", 1)
+        # display.lcd_clear()
+        # display.lcd_display_string(f"{action} {btn}", 1)
         try:
             mod, key, release = self.config[action][btn]
             keyboard.press([hid[mod]], hid[key], release)
-            display.lcd_display_string(f"{mod} {key}", 2)
+            # display.lcd_display_string(f"{mod} {key}", 2)
         except KeyError as e:
-            display.lcd_display_string("Not Mapped", 2)
+            # display.lcd_display_string("Not Mapped", 2)
             print(e)
 
 
