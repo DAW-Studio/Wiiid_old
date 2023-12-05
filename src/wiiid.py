@@ -78,6 +78,7 @@ class Wiiid:
             holdtap = False
             for hold in self.buttons:
                 if self.buttons[hold].holding:
+                    holdtap = True
                     self.act("hold+tap", [hold,btn])
             if not holdtap:
                 self.act("tap", [btn])
