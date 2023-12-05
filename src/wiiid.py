@@ -114,9 +114,9 @@ class Wiiid:
 
     def tilting(self, acc):
         z = acc[0]
-        if z < self.tilt.z-10:
+        if z < self.tilt.z-5:
             self.act("tilt", ["-z"])
-        elif z > self.tilt.z+10:
+        elif z > self.tilt.z+5:
             self.act("tilt", ["+z"])
 
 

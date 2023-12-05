@@ -2,8 +2,10 @@
   "tap": {
     "up": ["", "up", true],
     "down": ["", "down", true],
-    "left": ["", "left", true],
-    "right": ["", "right", true]
+    "left": ["gui","z", true],
+    "right": ["gui+shift", "z", true],
+    "plus": ["", "rightbracket", true],
+    "minus": ["", "leftbracket", true]
   },
   "hold": {
     "a": ["shift", "a", false]
@@ -12,8 +14,8 @@
     "b,a": ["gui", "tab", true] 
   },
   "tilt": {
-    "-z": ["", "left", true],
-    "+z": ["", "right", true]
+    "-z": ["", ",", true],
+    "+z": ["", ".", true]
   }
 
 }
