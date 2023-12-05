@@ -61,6 +61,7 @@ class Wiiid:
     def run(self):
         while True:
             accState = self.wii.state["acc"]
+            print(accState)
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
                 if (btnState & self.buttons[btn].ID):
