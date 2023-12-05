@@ -33,6 +33,7 @@ class Wiiid:
                 connected = True
                 break
         if connected:
+            print("connected")
             # display.lcd_display_string("Connected ", 2)
         else:
             sys.exit()
