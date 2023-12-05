@@ -1,3 +1,4 @@
+import sys
 import cwiid
 import drivers
 import time
@@ -23,12 +24,17 @@ class Button:
 
 class Wiiid:
     def __init__(self) -> None:
-        display.lcd_display_string("Wiiid", 1)
+        display.lcd_display_string("Wiiid v0.1", 1)
+        display.lcd_display_string(f"Connecting", 2)
+        connected = False
         for i in range(5):
-            display.lcd_display_string(f"Attempts: {i}", 2)
             if self.connect():
+                connected = True
                 break
-        display.lcd_display_string("Connected  ", 2)
+        if connected:
+            display.lcd_display_string("Connected ", 2)
+        else:
+            sys.exit()
         time.sleep(1)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN
@@ -58,15 +64,34 @@ class Wiiid:
                         self.button_pressed(btn)
                 elif self.buttons[btn].value == 1:
                     self.button_released(btn)
+                if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 0.6:
+                    self.button_held(btn)
 
 
     def button_pressed(self, btn):
         self.buttons[btn].value = 1
+        self.buttons[btn].holdtime = time.time()
 
 
     def button_released(self, btn):
+        if not self.buttons[btn].holding:
+            holdtap = False
+            for hold in self.buttons:
+                if self.buttons[hold].holding:
+                    self.act("hold+tap", [hold,btn])
+            if not holdtap:
+                self.act("tap", [btn])
+        else:
+            keyboard.release()
         self.buttons[btn].value = 0
-        self.act("tap", btn)
+        self.buttons[btn].holdtime = -1
+        self.buttons[btn].holding = False
+
+
+    def button_held(self, btn):
+        self.act("hold", [btn])
+        self.buttons[btn].holdtime = -1
+        self.buttons[btn].holding = True
 
 
     def act(self, action, btn):
