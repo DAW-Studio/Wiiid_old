@@ -40,7 +40,7 @@ class Wiiid:
         time.sleep(1)
         # display.lcd_backlight(0)
         self.rumble()
-        self.wii.rpt_mode = cwiid.RPT_BTN
+        self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
@@ -60,7 +60,7 @@ class Wiiid:
 
     def run(self):
         while True:
-            print(self.wii.state)
+            accState = self.wii.state["acc"]
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
                 if (btnState & self.buttons[btn].ID):
@@ -70,6 +70,7 @@ class Wiiid:
                     self.button_released(btn)
                 if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 0.6:
                     self.button_held(btn)
+            time.sleep(0.01)
 
 
     def button_pressed(self, btn):
