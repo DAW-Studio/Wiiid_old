@@ -24,6 +24,7 @@ class Button:
 
 class Wiiid:
     def __init__(self) -> None:
+        display.lcd_backlight(1)
         display.lcd_display_string("Wiiid v0.1", 1)
         display.lcd_display_string(f"Connecting", 2)
         connected = False
@@ -36,6 +37,7 @@ class Wiiid:
         else:
             sys.exit()
         time.sleep(1)
+        display.lcd_backlight(0)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.buttons = {
