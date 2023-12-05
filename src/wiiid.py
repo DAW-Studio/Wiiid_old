@@ -95,6 +95,7 @@ class Wiiid:
 
 
     def act(self, action, btn):
+        btn = str(btn).replace("[","").replace("]","")
         display.lcd_clear()
         display.lcd_display_string(f"{action} {btn}", 1)
         try:

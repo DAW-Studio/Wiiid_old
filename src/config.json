@@ -2,11 +2,13 @@
   "tap": {
     "up": ["", "up", true],
     "down": ["", "down", true],
-    ["left"]: ["", "left", true],
+    "left": ["", "left", true],
     "right": ["", "right", true]
   },
   "hold": {
+    "a": ["shift", "a", false]
   },
   "hold+tap": {
+    "b,a": ["gui", "tab", true] 
   }
 }
