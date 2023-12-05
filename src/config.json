@@ -10,5 +10,10 @@
   },
   "hold+tap": {
     "b,a": ["gui", "tab", true] 
+  },
+  "tilt": {
+    "-z": ["", "left", true],
+    "+z": ["", "right", true]
   }
+
 }

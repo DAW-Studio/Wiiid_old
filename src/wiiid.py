@@ -22,6 +22,11 @@ class Button:
         self.holding = False
 
 
+class Tilt:
+    x: int
+    z: int
+
+
 class Wiiid:
     def __init__(self) -> None:
         # display.lcd_backlight(1)
@@ -41,6 +46,7 @@ class Wiiid:
         # display.lcd_backlight(0)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
+        self.tilt = Tilt
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
@@ -60,8 +66,6 @@ class Wiiid:
 
     def run(self):
         while True:
-            accState = self.wii.state["acc"]
-            print(accState)
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
                 if (btnState & self.buttons[btn].ID):
@@ -71,10 +75,17 @@ class Wiiid:
                     self.button_released(btn)
                 if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 0.6:
                     self.button_held(btn)
+            if self.buttons["home"].value == 1:
+                accState = self.wii.state["acc"]
+                self.tilting(accState)
             time.sleep(0.01)
 
 
     def button_pressed(self, btn):
+        if btn == "home":
+            accState = self.wii.state["acc"]
+            self.tilt.z = accState[0]
+            self.tilt.x = accState[1]
         self.buttons[btn].value = 1
         self.buttons[btn].holdtime = time.time()
 
@@ -99,6 +110,14 @@ class Wiiid:
         self.act("hold", [btn])
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = True
+
+
+    def tilting(self, acc):
+        z = acc[0]
+        if z < self.tilt.z-10:
+            self.act("tilt", ["-z"])
+        elif z > self.tilt.z+10:
+            self.act("tilt", ["+z"])
 
 
     def act(self, action, btn):
