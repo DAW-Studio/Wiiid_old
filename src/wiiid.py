@@ -1,25 +1,37 @@
 import sys
 import cwiid
+from zero_hid import Keyboard, KeyCodes
 # import drivers
 import time
 import json
 import os
+import pygame
 
 from strhid import hid
 
-from zero_hid import Keyboard, KeyCodes
-keyboard = Keyboard()
+pygame.init()
 
-# display = drivers.Lcd()
+keyboard = Keyboard()
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
+
+class Image:
+    def __init__(self, name:str, pos:tuple[int,int]) -> None:
+        self.surface = pygame.image.load(f"{DIR}/data/images/{name}")
+        self.pos = pos
+
+    def render(self, surface:pygame.Surface):
+        surface.blit(self.surface, self.pos)
+
+
 class Button:
-    def __init__(self, ID:int, value:int=0, holdtime:float=-1):
+    def __init__(self, ID:int, name:str, pos:tuple[int,int], value:int=0, holdtime:float=-1):
         self.ID = ID
         self.value = value
         self.holdtime = holdtime
         self.holding = False
+        self.image = Image(f"{name}.png", pos)
 
 
 class Tilt:
@@ -48,24 +60,34 @@ class Wiiid:
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
         self.tilt = Tilt
         self.buttons = {
-            "a": Button(cwiid.BTN_A),
-            "b": Button(cwiid.BTN_B),
-            "up": Button(cwiid.BTN_UP),
-            "down": Button(cwiid.BTN_DOWN),
-            "left": Button(cwiid.BTN_LEFT),
-            "right": Button(cwiid.BTN_RIGHT),
-            "plus": Button(cwiid.BTN_PLUS),
-            "minus": Button(cwiid.BTN_MINUS),
-            "home": Button(cwiid.BTN_HOME),
-            "1": Button(cwiid.BTN_1),
-            "2": Button(cwiid.BTN_2)
+            "a": Button(cwiid.BTN_A, "A", (264,242)),
+            "b": Button(cwiid.BTN_B, "B", (412,175)),
+            # "up": Button(cwiid.BTN_UP),
+            # "down": Button(cwiid.BTN_DOWN),
+            # "left": Button(cwiid.BTN_LEFT),
+            # "right": Button(cwiid.BTN_RIGHT),
+            "plus": Button(cwiid.BTN_PLUS, "plus", (314, 343)),
+            "minus": Button(cwiid.BTN_MINUS, "minus", (238,343)),
+            "home": Button(cwiid.BTN_HOME, "minus", (238,343)),
+            "1": Button(cwiid.BTN_1, "1", (272,476)),
+            "2": Button(cwiid.BTN_2, "2", (272,530))
         }
         with open(f"{DIR}/config.json") as f:
             self.config = json.load(f)
 
+        self.screen = pygame.display.set_mode((700,700),pygame.FULLSCREEN)
+        pygame.display.set_caption("Wiiid")
+        self.base_top = Image("base_top.png", (220,90))
+        self.base_bottom = Image("base_bottom.png", (374,90))
+        
+
 
     def run(self):
         while True:
+            self.screen.fill((0,0,0))
+            self.base_top.render(self.screen)
+            self.base_bottom.render(self.screen)
+
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
                 if (btnState & self.buttons[btn].ID):
@@ -75,6 +97,10 @@ class Wiiid:
                     self.button_released(btn)
                 if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 0.6:
                     self.button_held(btn)
+                if self.buttons[btn].value == 1:
+                    self.buttons[btn].image.render(self.screen)
+
+
             if self.buttons["home"].value == 1:
                 accState = self.wii.state["acc"]
                 self.tilting(accState)
@@ -130,7 +156,8 @@ class Wiiid:
             # display.lcd_display_string(f"{mod} {key}", 2)
         except KeyError as e:
             # display.lcd_display_string("Not Mapped", 2)
-            print(e)
+            # print(e)
+            pass
 
 
     def rumble(self, seconds:float=0.3):
