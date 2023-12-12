@@ -43,6 +43,20 @@ class Button:
             self.image.render(surface)
 
 
+class Dpad:
+    def __init__(self, buttons: list[Button]):
+        self.buttons = buttons
+        self.image = Image("dpad.png", (254,147))
+
+    def render(self, surface:pygame.Surface):
+        for btn in self.buttons:
+            if btn.value == 1:
+                btn.active_image.render(surface)
+                return
+        self.image.render(surface)
+
+
+
 class Tilt:
     x: int
     z: int
@@ -86,6 +100,12 @@ class Wiiid:
             "1": Button(cwiid.BTN_1, "1", (272,476)),
             "2": Button(cwiid.BTN_2, "2", (272,530))
         }
+        self.dpad = Dpad([
+            self.buttons["up"],
+            self.buttons["down"],
+            self.buttons["left"],
+            self.buttons["right"]
+        ])
         with open(f"{DIR}/config.json") as f:
             self.config = json.load(f)
 
@@ -109,7 +129,10 @@ class Wiiid:
                 if button.holdtime != -1 and time.time() - button.holdtime > 0.6:
                     self.button_held(btn)
 
-                button.render(self.screen)
+                if button in self.dpad.buttons:
+                    self.dpad.render(self.screen)
+                else:
+                    button.render(self.screen)
 
 
             if self.buttons["home"].value == 1:
