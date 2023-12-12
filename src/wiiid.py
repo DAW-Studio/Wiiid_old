@@ -49,13 +49,14 @@ class Wiiid:
 
         connected = False
         while True:
+            self.screen.fill((0,0,0))
             self.searching.render(self.screen)
+            pygame.display.update()
             if self.connect():
                 connected = True
                 break
             else:
                 self.no_wiimote_found.render(self.screen)
-            time.sleep(1)
             pygame.display.update()
         if connected:
             print("connected")
