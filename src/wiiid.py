@@ -78,7 +78,7 @@ class Wiiid:
             "b": Button(cwiid.BTN_B, "B", (412,175)),
             # "up": Button(cwiid.BTN_UP),
             # "down": Button(cwiid.BTN_DOWN),
-            # "left": Button(cwiid.BTN_LEFT),
+            "left": Button(cwiid.BTN_LEFT, "left", (254,147)),
             # "right": Button(cwiid.BTN_RIGHT),
             "plus": Button(cwiid.BTN_PLUS, "plus", (314, 343)),
             "minus": Button(cwiid.BTN_MINUS, "minus", (238,343)),
