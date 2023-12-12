@@ -52,11 +52,14 @@ class Dpad:
         self.image = Image("dpad.png", (254,147))
 
     def render(self, surface:pygame.Surface):
+        active = False
         for btn in self.buttons:
             if btn.value == 1:
                 btn.active_image.render(surface)
-                return
-        self.image.render(surface)
+                active = True
+                break
+        if not active:
+            self.image.render(surface)
 
 
 
