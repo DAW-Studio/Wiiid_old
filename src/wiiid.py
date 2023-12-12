@@ -56,6 +56,7 @@ class Wiiid:
                 connected = True
                 break
             else:
+                self.screen.fill((0,0,0))
                 self.no_wiimote_found.render(self.screen)
                 pygame.display.update()
                 time.sleep(1)
