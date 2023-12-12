@@ -31,6 +31,16 @@ class Button:
         self.holdtime = holdtime
         self.holding = False
         self.image = Image(f"{name}.png", pos)
+        try:
+            self.active_image = Image(f"{name}_active.png", pos)
+        except:
+            self.active_image = self.image
+
+    def render(self, surface:pygame.Surface):
+        if self.value == 1:
+            self.active_image.render(surface)
+        else:
+            self.image.render(surface)
 
 
 class Tilt:
@@ -90,15 +100,16 @@ class Wiiid:
 
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
-                if (btnState & self.buttons[btn].ID):
-                    if self.buttons[btn].value == 0:
+                button = self.buttons[btn]
+                if (btnState & button.ID):
+                    if button.value == 0:
                         self.button_pressed(btn)
-                elif self.buttons[btn].value == 1:
+                elif button.value == 1:
                     self.button_released(btn)
-                if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 0.6:
+                if button.holdtime != -1 and time.time() - button.holdtime > 0.6:
                     self.button_held(btn)
-                if self.buttons[btn].value == 1:
-                    self.buttons[btn].image.render(self.screen)
+
+                button.render(self.screen)
 
 
             if self.buttons["home"].value == 1:
