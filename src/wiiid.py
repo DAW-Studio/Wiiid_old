@@ -1,7 +1,6 @@
 import sys
 import cwiid
 from zero_hid import Keyboard, KeyCodes
-# import drivers
 import time
 import json
 import os
@@ -41,21 +40,28 @@ class Tilt:
 
 class Wiiid:
     def __init__(self) -> None:
-        # display.lcd_backlight(1)
-        # display.lcd_display_string("Wiiid v0.1", 1)
-        # display.lcd_display_string(f"Connecting", 2)
+        self.screen = pygame.display.set_mode((700,700),pygame.FULLSCREEN)
+        pygame.display.set_caption("Wiiid")
+        self.base_top = Image("base_top.png", (220,90))
+        self.base_bottom = Image("base_bottom.png", (374,90))
+        self.searching = Image("searching.png", (0,0))
+        self.no_wiimote_found = Image("no_wiimote_found.png", (0,0))
+
         connected = False
-        for i in range(5):
+        while True:
+            self.searching.render(self.screen)
             if self.connect():
                 connected = True
                 break
+            else:
+                self.no_wiimote_found.render(self.screen)
+            time.sleep(1)
+            pygame.display.update()
         if connected:
             print("connected")
-            # display.lcd_display_string("Connected ", 2)
         else:
             sys.exit()
         time.sleep(1)
-        # display.lcd_backlight(0)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
         self.tilt = Tilt
@@ -75,10 +81,6 @@ class Wiiid:
         with open(f"{DIR}/config.json") as f:
             self.config = json.load(f)
 
-        self.screen = pygame.display.set_mode((700,700),pygame.FULLSCREEN)
-        pygame.display.set_caption("Wiiid")
-        self.base_top = Image("base_top.png", (220,90))
-        self.base_bottom = Image("base_bottom.png", (374,90))
         
 
 
