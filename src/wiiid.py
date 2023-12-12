@@ -52,14 +52,11 @@ class Dpad:
         self.image = Image("dpad.png", (254,147))
 
     def render(self, surface:pygame.Surface):
-        active = False
         for btn in self.buttons:
             if btn.value == 1:
                 btn.active_image.render(surface)
-                active = True
-                break
-        if not active:
-            self.image.render(surface)
+                return
+        self.image.render(surface)
 
 
 
@@ -96,10 +93,10 @@ class Wiiid:
         self.buttons = {
             "a": Button(cwiid.BTN_A, "A", (264,242)),
             "b": Button(cwiid.BTN_B, "B", (412,175)),
-            "up": Button(cwiid.BTN_LEFT, "up", (254,147)),
-            "down": Button(cwiid.BTN_LEFT, "down", (254,147)),
+            "up": Button(cwiid.BTN_UP, "up", (254,147)),
+            "down": Button(cwiid.BTN_DOWN, "down", (254,147)),
             "left": Button(cwiid.BTN_LEFT, "left", (254,147)),
-            "right": Button(cwiid.BTN_LEFT, "right", (254,147)),
+            "right": Button(cwiid.BTN_RIGHT, "right", (254,147)),
             "plus": Button(cwiid.BTN_PLUS, "plus", (314, 343)),
             "minus": Button(cwiid.BTN_MINUS, "minus", (238,343)),
             "home": Button(cwiid.BTN_HOME, "minus", (238,343)),
