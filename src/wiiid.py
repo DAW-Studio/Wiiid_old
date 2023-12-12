@@ -44,22 +44,17 @@ class Wiiid:
         pygame.display.set_caption("Wiiid")
         self.base_top = Image("base_top.png", (220,90))
         self.base_bottom = Image("base_bottom.png", (374,90))
+
         self.searching = Image("searching.png", (0,0))
-        self.no_wiimote_found = Image("no_wiimote_found.png", (0,0))
+        self.screen.fill((0,0,0))
+        self.searching.render(self.screen)
+        pygame.display.update()
 
         connected = False
         while True:
-            self.screen.fill((0,0,0))
-            self.searching.render(self.screen)
-            pygame.display.update()
             if self.connect():
                 connected = True
                 break
-            else:
-                self.screen.fill((0,0,0))
-                self.no_wiimote_found.render(self.screen)
-                pygame.display.update()
-                time.sleep(1)
         if connected:
             print("connected")
         else:
