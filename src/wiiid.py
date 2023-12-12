@@ -106,6 +106,8 @@ class Wiiid:
                 self.tilting(accState)
             time.sleep(0.01)
 
+            pygame.display.update()
+
 
     def button_pressed(self, btn):
         if btn == "home":
