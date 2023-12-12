@@ -99,7 +99,7 @@ class Wiiid:
             "right": Button(cwiid.BTN_RIGHT, "right", (254,147)),
             "plus": Button(cwiid.BTN_PLUS, "plus", (314, 343)),
             "minus": Button(cwiid.BTN_MINUS, "minus", (238,343)),
-            "home": Button(cwiid.BTN_HOME, "home", (256,343)),
+            "home": Button(cwiid.BTN_HOME, "home", (276,343)),
             "1": Button(cwiid.BTN_1, "1", (272,476)),
             "2": Button(cwiid.BTN_2, "2", (272,530))
         }
