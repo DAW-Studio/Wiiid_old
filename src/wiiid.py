@@ -187,15 +187,10 @@ class Wiiid:
 
     def act(self, action, btn):
         btn = ",".join(btn)
-        # display.lcd_clear()
-        # display.lcd_display_string(f"{action} {btn}", 1)
         try:
             mod, key, release = self.config[action][btn]
             keyboard.press([hid[mod]], hid[key], release)
-            # display.lcd_display_string(f"{mod} {key}", 2)
         except KeyError as e:
-            # display.lcd_display_string("Not Mapped", 2)
-            # print(e)
             pass
 
 
