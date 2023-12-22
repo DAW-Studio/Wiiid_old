@@ -6,12 +6,11 @@ from util import Image
 class Button:
     def __init__(self, wiiid, ID:int, name:str, value:int=0, holdtime:float=-1):
         self.wiiid = wiiid
-        self.buttons = wiiid.buttons
         self.ID = ID
         self.value = value
         self.holdtime = holdtime
         self.holding = False
-        self.image = Image(f"{name}.png", (0,0))
+        self.image = Image(f"buttons/{name}.png", (0,0))
 
     def state(self, btnState):
         if (btnState & self.ID):
@@ -24,8 +23,8 @@ class Button:
         return None
 
     def holdtap(self):
-        for btn in self.buttons:
-            if self.buttons[btn].holding:
+        for btn in self.wiiid.buttons:
+            if self.wiiid.buttons[btn].holding:
                 return btn
         return None
 
