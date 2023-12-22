@@ -10,7 +10,10 @@ class Button:
         self.value = value
         self.holdtime = holdtime
         self.holding = False
-        self.image = Image(f"buttons/{name}.png", (0,0))
+        try:
+            self.image = Image(f"buttons/{name}.png", (0,0))
+        except:
+            self.image = None
 
     def state(self, btnState):
         if (btnState & self.ID):
@@ -52,4 +55,4 @@ class Button:
 
     def render(self, surface:pygame.Surface):
         if self.value == 1:
-            self.image.render(surface)
+            if self.image != None: self.image.render(surface)

@@ -28,7 +28,7 @@ class Wiiid:
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
         self.buttons = {
             "a": Button(self, cwiid.BTN_A, "a"),
-            "b": Button(self, cwiid.BTN_B, "b"),
+            "b": Button(self, cwiid.BTN_B, ""),
             "up": Button(self, cwiid.BTN_UP, "up"),
             "down": Button(self, cwiid.BTN_DOWN, "down"),
             "left": Button(self, cwiid.BTN_LEFT, "left"),
