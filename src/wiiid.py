@@ -8,6 +8,7 @@ import pygame
 from util import Image
 from button import Button
 from scenes.connect import ConnectScene
+from scenes.main import MainScene
 
 from strhid import hid
 
@@ -28,6 +29,7 @@ class Wiiid:
 
         if not self.connect():
             sys.exit()
+        self.scene = MainScene(self.screen)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
         self.buttons = {
@@ -50,6 +52,7 @@ class Wiiid:
     def run(self):
         while True:
             self.screen.fill((0,0,0))
+            self.scene.render()
 
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
