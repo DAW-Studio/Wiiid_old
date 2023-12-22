@@ -60,8 +60,8 @@ class Wiiid:
             pygame.display.update()
 
 
-    def act(self, action, btn):
-        btn = ",".join(btn.name)
+    def act(self, action, btns):
+        btn = ",".join(btns)
         try:
             mod, key, release = self.config[action][btn]
             keyboard.press([hid[mod]], hid[key], release)

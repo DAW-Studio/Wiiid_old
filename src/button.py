@@ -42,17 +42,17 @@ class Button:
         if not self.holding:
             heldBtn = self.holdtap()
             if heldBtn != None:
-                return ["hold+tap", [heldBtn,self]]
+                return ["hold+tap", [heldBtn,self.name]]
             else:
-                return ["tap", [self]]
+                return ["tap", [self.name]]
         else:
             self.holding = False
-            return ["release", [self]]
+            return ["release", [self.name]]
 
     def held(self):
         self.holdtime = -1
         self.holding = True
-        return ["hold", [self]]
+        return ["hold", [self.name]]
 
     def render(self, surface:pygame.Surface):
         if self.value == 1:
