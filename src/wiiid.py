@@ -7,6 +7,7 @@ import os
 import pygame
 from util import Image
 from button import Button
+from scenes.connect import ConnectScene
 
 from strhid import hid
 
@@ -21,6 +22,9 @@ class Wiiid:
     def __init__(self) -> None:
         self.screen = pygame.display.set_mode((720,720))
         pygame.display.set_caption("WiiiD")
+        self.scene = ConnectScene(self.screen)
+        self.scene.render()
+        pygame.display.update()
 
         if not self.connect():
             sys.exit()
