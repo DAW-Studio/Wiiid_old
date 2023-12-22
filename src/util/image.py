@@ -1,7 +1,7 @@
 import pygame
 import os
 
-DIR = os.path.abspath(os.path.abspath(os.path.dirname(os.path.abspath(__file__))))
+DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Image:
     def __init__(self, name:str, pos:tuple[int,int]=(0,0)) -> None:
