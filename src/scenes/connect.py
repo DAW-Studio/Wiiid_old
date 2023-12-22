@@ -1,4 +1,4 @@
-from .scene import Scene, pygame
+import pygame
 from util import Image
 
 
