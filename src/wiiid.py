@@ -5,6 +5,8 @@ import time
 import json
 import os
 import pygame
+from util import Image
+from button import Button
 
 from strhid import hid
 
@@ -15,174 +17,47 @@ keyboard = Keyboard()
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-class Image:
-    def __init__(self, name:str, pos:tuple[int,int]) -> None:
-        self.surface = pygame.image.load(f"{DIR}/data/images/{name}")
-        self.pos = pos
-
-    def render(self, surface:pygame.Surface):
-        surface.blit(self.surface, self.pos)
-
-
-class Button:
-    def __init__(self, ID:int, name:str, pos:tuple[int,int], value:int=0, holdtime:float=-1):
-        self.ID = ID
-        self.value = value
-        self.holdtime = holdtime
-        self.holding = False
-        try:
-            self.image = Image(f"{name}.png", pos)
-        except:
-            self.image = Image("minus.png", pos)
-        try:
-            self.active_image = Image(f"{name}_active.png", pos)
-        except:
-            self.active_image = self.image
-
-    def render(self, surface:pygame.Surface):
-        if self.value == 1:
-            self.active_image.render(surface)
-        else:
-            self.image.render(surface)
-
-
-class Dpad:
-    def __init__(self, buttons: list[Button]):
-        self.buttons = buttons
-        self.image = Image("dpad.png", (254,147))
-
-    def render(self, surface:pygame.Surface):
-        for btn in self.buttons:
-            if btn.value == 1:
-                btn.active_image.render(surface)
-                return
-        self.image.render(surface)
-
-
-
-class Tilt:
-    x: int
-    z: int
-
-
 class Wiiid:
     def __init__(self) -> None:
-        self.screen = pygame.display.set_mode((700,700),pygame.FULLSCREEN)
-        pygame.display.set_caption("Wiiid")
-        self.base_top = Image("base_top.png", (220,90))
-        self.base_bottom = Image("base_bottom.png", (374,90))
+        self.screen = pygame.display.set_mode((720,720))
+        pygame.display.set_caption("WiiiD")
 
-        self.searching = Image("searching.png", (0,0))
-        self.screen.fill((0,0,0))
-        self.searching.render(self.screen)
-        pygame.display.update()
-
-        connected = False
-        while True:
-            if self.connect():
-                connected = True
-                break
-        if connected:
-            print("connected")
-        else:
+        if not self.connect():
             sys.exit()
-        time.sleep(1)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
-        self.tilt = Tilt
         self.buttons = {
-            "a": Button(cwiid.BTN_A, "A", (264,242)),
-            "b": Button(cwiid.BTN_B, "B", (412,175)),
-            "up": Button(cwiid.BTN_UP, "up", (254,147)),
-            "down": Button(cwiid.BTN_DOWN, "down", (254,147)),
-            "left": Button(cwiid.BTN_LEFT, "left", (254,147)),
-            "right": Button(cwiid.BTN_RIGHT, "right", (254,147)),
-            "plus": Button(cwiid.BTN_PLUS, "plus", (314, 343)),
-            "minus": Button(cwiid.BTN_MINUS, "minus", (238,343)),
-            "home": Button(cwiid.BTN_HOME, "home", (276,343)),
-            "1": Button(cwiid.BTN_1, "1", (272,476)),
-            "2": Button(cwiid.BTN_2, "2", (272,530))
+            "a": Button(self, cwiid.BTN_A, "a"),
+            "b": Button(self, cwiid.BTN_B, "b"),
+            "up": Button(self, cwiid.BTN_UP, "up"),
+            "down": Button(self, cwiid.BTN_DOWN, "down"),
+            "left": Button(self, cwiid.BTN_LEFT, "left"),
+            "right": Button(self, cwiid.BTN_RIGHT, "right"),
+            "plus": Button(self, cwiid.BTN_PLUS, "plus"),
+            "minus": Button(self, cwiid.BTN_MINUS, "minus"),
+            "home": Button(self, cwiid.BTN_HOME, "home"),
+            "1": Button(self, cwiid.BTN_1, "1"),
+            "2": Button(self, cwiid.BTN_2, "2")
         }
-        self.dpad = Dpad([
-            self.buttons["up"],
-            self.buttons["down"],
-            self.buttons["left"],
-            self.buttons["right"]
-        ])
         with open(f"{DIR}/config.json") as f:
             self.config = json.load(f)
-
-        
 
 
     def run(self):
         while True:
             self.screen.fill((0,0,0))
-            self.base_top.render(self.screen)
-            self.base_bottom.render(self.screen)
 
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
                 button = self.buttons[btn]
-                if (btnState & button.ID):
-                    if button.value == 0:
-                        self.button_pressed(btn)
-                elif button.value == 1:
-                    self.button_released(btn)
-                if button.holdtime != -1 and time.time() - button.holdtime > 0.6:
-                    self.button_held(btn)
+                state = button.state(btnState)
+                if state != None:
+                    self.act(*state)
+                button.render(self.screen)
 
-                if button in self.dpad.buttons:
-                    self.dpad.render(self.screen)
-                else:
-                    button.render(self.screen)
-
-
-            if self.buttons["home"].value == 1:
-                accState = self.wii.state["acc"]
-                self.tilting(accState)
             time.sleep(0.01)
 
             pygame.display.update()
-
-
-    def button_pressed(self, btn):
-        if btn == "home":
-            accState = self.wii.state["acc"]
-            self.tilt.z = accState[0]
-            self.tilt.x = accState[1]
-        self.buttons[btn].value = 1
-        self.buttons[btn].holdtime = time.time()
-
-
-    def button_released(self, btn):
-        if not self.buttons[btn].holding:
-            holdtap = False
-            for hold in self.buttons:
-                if self.buttons[hold].holding:
-                    holdtap = True
-                    self.act("hold+tap", [hold,btn])
-            if not holdtap:
-                self.act("tap", [btn])
-        else:
-            keyboard.release()
-        self.buttons[btn].value = 0
-        self.buttons[btn].holdtime = -1
-        self.buttons[btn].holding = False
-
-
-    def button_held(self, btn):
-        self.act("hold", [btn])
-        self.buttons[btn].holdtime = -1
-        self.buttons[btn].holding = True
-
-
-    def tilting(self, acc):
-        z = acc[0]
-        if z < self.tilt.z-5:
-            self.act("tilt", ["-z"])
-        elif z > self.tilt.z+5:
-            self.act("tilt", ["+z"])
 
 
     def act(self, action, btn):
@@ -201,11 +76,13 @@ class Wiiid:
 
 
     def connect(self):
-        try:
-            self.wii = cwiid.Wiimote()
-            return True
-        except RuntimeError:
-            return False
+        while True:
+            try:
+                self.wii = cwiid.Wiimote()
+                break
+            except RuntimeError:
+                pass
+        return True
 
 
 if __name__ == "__main__":
