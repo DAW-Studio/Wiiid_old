@@ -61,7 +61,7 @@ class Wiiid:
 
 
     def act(self, action, btn):
-        btn = ",".join(btn)
+        btn = ",".join(btn.name)
         try:
             mod, key, release = self.config[action][btn]
             keyboard.press([hid[mod]], hid[key], release)

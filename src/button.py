@@ -7,6 +7,7 @@ class Button:
     def __init__(self, wiiid, ID:int, name:str, value:int=0, holdtime:float=-1):
         self.wiiid = wiiid
         self.ID = ID
+        self.name = name
         self.value = value
         self.holdtime = holdtime
         self.holding = False
