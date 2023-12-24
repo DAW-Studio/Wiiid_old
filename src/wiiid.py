@@ -76,11 +76,12 @@ class Wiiid:
             release = shortcut["release"]
             alternate = shortcut["alternate"]
             if alternate != None:
+                print(alternate)
                 key = key[alternate]
                 shortcut["alternate"] = shortcut["alternate"]+1 if alternate != len(key) else 0
             keyboard.press([hid[mod]], hid[key], release)
         except KeyError as e:
-            pass
+            print(e)
 
 
     def rumble(self, seconds:float=0.3):
