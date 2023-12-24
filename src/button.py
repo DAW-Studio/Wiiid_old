@@ -52,7 +52,7 @@ class Button:
     def held(self):
         self.holdtime = -1
         self.holding = True
-        return ["hold", [self]]
+        return ["hold", [self.name]]
 
     def render(self, surface:pygame.Surface):
         if self.value == 1:
