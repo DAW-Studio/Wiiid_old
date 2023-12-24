@@ -68,9 +68,16 @@ class Wiiid:
 
 
     def act(self, action, btns):
-        btn = ",".join(btns)
+        btn = ",".join([b.name for b in btns])
         try:
-            mod, key, release = self.config[action][btn]
+            shortcut = self.config[action][btn]
+            mod = shortcut["mod"]
+            key = shortcut["key"]
+            release = shortcut["release"]
+            alternate = shortcut["alternate"]
+            if alternate != None:
+                key = key[alternate]
+                shortcut["alternate"] = shortcut["alternate"]+1 if alternate != len(key) else 0
             keyboard.press([hid[mod]], hid[key], release)
         except KeyError as e:
             pass

@@ -1,21 +1,23 @@
 {
   "tap": {
-    "up": ["", "up", true],
-    "down": ["", "down", true],
-    "left": ["gui","z", true],
-    "right": ["gui+shift", "z", true],
-    "plus": ["", "rightbracket", true],
-    "minus": ["", "leftbracket", true]
+    "up": ["", "up", true, 0],
+    "down": ["", "down", true, 0],
+    "left": ["gui","z", true, 0],
+    "right": ["gui+shift", "z", true, 0],
+    "plus": ["", "rightbracket", true, 0],
+    "minus": ["", "leftbracket", true, 0]
   },
   "hold": {
-    "a": ["shift", "a", false]
+    "a": ["shift", "a", false, 0]
   },
   "hold+tap": {
-    "b,a": ["gui", "tab", true] 
+    "b,a": {
+      "mod":"", "key":["b","e"], "release":true, "alternate":0
+    }
   },
   "tilt": {
-    "-z": ["", ",", true],
-    "+z": ["", ".", true]
+    "-z": ["", ",", true, 0],
+    "+z": ["", ".", true, 0]
   }
 
 }

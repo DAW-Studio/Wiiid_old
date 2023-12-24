@@ -29,7 +29,7 @@ class Button:
     def holdtap(self):
         for btn in self.wiiid.buttons:
             if self.wiiid.buttons[btn].holding:
-                return btn
+                return self.wiiid.buttons[btn]
         return None
 
     def pressed(self):
@@ -42,12 +42,12 @@ class Button:
         if not self.holding:
             heldBtn = self.holdtap()
             if heldBtn != None:
-                return ["hold+tap", [heldBtn,self.name]]
+                return ["hold+tap", [heldBtn,self]]
             else:
-                return ["tap", [self.name]]
+                return ["tap", [self]]
         else:
             self.holding = False
-            return ["release", [self.name]]
+            return ["release", [self]]
 
     def held(self):
         self.holdtime = -1
