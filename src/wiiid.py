@@ -68,7 +68,7 @@ class Wiiid:
 
 
     def act(self, action, btns):
-        btn = ",".join([b.name for b in btns])
+        btn = ",".join(btns)
         try:
             shortcut = self.config[action][btn]
             mod = shortcut["mod"]
