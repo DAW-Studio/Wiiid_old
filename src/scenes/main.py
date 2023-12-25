@@ -12,7 +12,7 @@ class MainScene():
         self.log("wiimote connected")
 
     def log(self, *args):
-        self.logs.append(", ".join(args))
+        self.logs.append(", ".join([str(arg) for arg in args]))
 
 
     def render(self):
