@@ -1,4 +1,5 @@
 import os, sys
 
 def restart():
-    os.execv("xinit", ["-e python3 ~/Wiiid/src/wiiid.py"])
+    print(sys.argv[0])
+    os.execv(sys.argv[0], sys.argv)
