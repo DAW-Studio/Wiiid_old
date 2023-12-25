@@ -78,7 +78,7 @@ class Wiiid:
                 keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
             elif shortcut["type"] == "cycle":
                 key = shortcut["key"][shortcut["cycle"]]
-                shortcut["cycle"] = shortcut["cycle"]+1 if shortcut["cycle"] != len(key) else 0
+                shortcut["cycle"] = shortcut["cycle"]+1 if shortcut["cycle"] != len(shortcut["key"]) else 0
                 keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
             elif shortcut["type"] == "function":
                 functions[shortcut["func"]](*shortcut["args"])
