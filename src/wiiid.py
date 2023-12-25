@@ -9,6 +9,7 @@ from util import Image
 from button import Button
 from scenes.connect import ConnectScene
 from scenes.main import MainScene
+from shortcut_functions import functions
 
 from strhid import hid
 
@@ -73,14 +74,14 @@ class Wiiid:
         btn = ",".join(btns)
         try:
             shortcut = self.config[action][btn]
-            mod = shortcut["mod"]
-            key = shortcut["key"]
-            release = shortcut["release"]
-            cycle = shortcut["cycle"]
-            if cycle != None:
-                key = key[cycle]
-                shortcut["cycle"] = shortcut["cycle"]+1 if cycle != len(key) else 0
-            keyboard.press([hid[mod]], hid[key], release)
+            if shortcut["type"] == "standard":
+                keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
+            elif shortcut["type"] == "cycle":
+                key = shortcut["key"][shortcut["cycle"]]
+                shortcut["cycle"] = shortcut["cycle"]+1 if shortcut["cycle"] != len(key) else 0
+                keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
+            elif shortcut["type"] == "function":
+                functions[shortcut["func"]](*shortcut["args"])
         except KeyError as e:
             print(e)
 
