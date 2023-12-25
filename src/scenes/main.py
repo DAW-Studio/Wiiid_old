@@ -9,7 +9,7 @@ class MainScene():
         self.background = Image("interface.png", (0,0))
         self.font = pygame.font.SysFont("Menlo",36)
         self.logHeight = self.font.get_height() + 10
-        self.maxLogs = 12
+        self.maxLogs = 18
         self.logs = []
         self.log("wiimote connected")
 
@@ -23,4 +23,4 @@ class MainScene():
         self.background.render(self.screen)
         for i, message in enumerate(self.logs):
             y = len(self.logs)-i
-            self.screen.blit(self.font.render(message,1,(255,255,255)), (40,690-self.logHeight-(self.logHeight*y)))
+            self.screen.blit(self.font.render(message,1,(255,255,255)), (40,690-self.font.get_height()-(self.logHeight*y)))
