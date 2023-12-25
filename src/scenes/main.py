@@ -7,8 +7,8 @@ class MainScene():
     def __init__(self, screen: pygame.Surface) -> None:
         self.screen = screen
         self.background = Image("interface.png", (0,0))
-        self.font = pygame.font.SysFont("Menlo",32)
-        self.logHeight = 24
+        self.font = pygame.font.SysFont("Menlo",36)
+        self.logHeight = self.font.get_height() + 10
         self.maxLogs = 12
         self.logs = []
         self.log("wiimote connected")
