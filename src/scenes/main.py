@@ -12,11 +12,12 @@ class MainScene():
         self.log("wiimote connected")
 
     def log(self, *args):
-        self.logs.append(str(args))
+        self.logs.append(", ".join(args))
 
 
     def render(self):
         self.background.render(self.screen)
-        height = 12
+        height = 18
         for i, message in enumerate(self.logs):
-            self.screen.blit(self.font.render(message,1,(255,255,255)), (40,600-(height*i)))
+            y = len(self.logs)-i
+            self.screen.blit(self.font.render(message,1,(255,255,255)), (40,600-(height*y)))
