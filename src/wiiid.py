@@ -83,7 +83,7 @@ class Wiiid:
             elif shortcut["type"] == "function":
                 functions[shortcut["func"]](*shortcut["args"])
         except KeyError as e:
-            print(e)
+            self.scene.log(e)
 
 
     def rumble(self, seconds:float=0.3):
