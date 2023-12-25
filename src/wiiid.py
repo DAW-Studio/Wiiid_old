@@ -77,13 +77,14 @@ class Wiiid:
             if shortcut["type"] == "standard":
                 keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
             elif shortcut["type"] == "cycle":
-                key = shortcut["key"][shortcut["cycle"]]
-                mod = shortcut["mod"][shortcut["cycle"]]
-                shortcut["cycle"] = shortcut["cycle"]+1 if shortcut["cycle"] != len(shortcut["key"]) else 0
+                cycle = shortcut["cycle"]
+                key = shortcut["key"][cycle]
+                mod = shortcut["mod"][cycle]
+                shortcut["cycle"] = cycle+1 if shortcut["cycle"] != len(shortcut["key"]) else 0
                 keyboard.press([hid[mod]], hid[key], shortcut["release"])
             elif shortcut["type"] == "function":
                 functions[shortcut["func"]](*shortcut["args"])
-        except KeyError as e:
+        except Exception as e:
             self.mainScene.log(e)
 
 
