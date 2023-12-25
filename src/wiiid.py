@@ -18,6 +18,8 @@ keyboard = Keyboard()
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
+os.system(f"cd {DIR};git pull")
+
 
 class Wiiid:
     def __init__(self) -> None:
@@ -74,11 +76,10 @@ class Wiiid:
             mod = shortcut["mod"]
             key = shortcut["key"]
             release = shortcut["release"]
-            alternate = shortcut["alternate"]
-            if alternate != None:
-                print(alternate)
-                key = key[alternate]
-                shortcut["alternate"] = shortcut["alternate"]+1 if alternate != len(key) else 0
+            cycle = shortcut["cycle"]
+            if cycle != None:
+                key = key[cycle]
+                shortcut["cycle"] = shortcut["cycle"]+1 if cycle != len(key) else 0
             keyboard.press([hid[mod]], hid[key], release)
         except KeyError as e:
             print(e)

@@ -8,12 +8,10 @@
     "minus": ["", "leftbracket", true, 0]
   },
   "hold": {
-    "a": ["shift", "a", false, 0]
+    "a": { "mod":"", "key":["a","b","c"], "release":true, "cycle":0 }
   },
   "hold+tap": {
-    "b,a": {
-      "mod":"", "key":["b","e"], "release":true, "alternate":0
-    }
+    "b,a": { "mod":"", "key":["b","e"], "release":true, "cycle":0 }
   },
   "tilt": {
     "-z": ["", ",", true, 0],

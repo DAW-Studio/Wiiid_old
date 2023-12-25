@@ -22,7 +22,7 @@ class Button:
                 return self.pressed()
         elif self.value == 1:
             return self.released()
-        if self.holdtime != -1 and time.time() - self.holdtime > 0.6:
+        if self.holdtime != -1 and time.time() - self.holdtime > 0.5:
             return self.held()
         return None
 
