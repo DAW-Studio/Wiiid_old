@@ -23,4 +23,4 @@ class MainScene():
         self.background.render(self.screen)
         for i, message in enumerate(self.logs):
             y = len(self.logs)-i
-            self.screen.blit(self.font.render(message,1,(255,255,255)), (40,680-(self.logHeight*y)))
+            self.screen.blit(self.font.render(message,1,(255,255,255)), (40,700-(self.logHeight*y)))
