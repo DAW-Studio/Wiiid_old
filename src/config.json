@@ -5,7 +5,8 @@
     "left": ["gui","z", true, 0],
     "right": ["gui+shift", "z", true, 0],
     "plus": ["", "rightbracket", true, 0],
-    "minus": {"type":"function", "func":"restart", "args":[] }
+    "minus": {"type":"function", "func":"restart", "args":[] },
+    "a": { "type":"cycle", "mod":"", "key":["a","b","c"], "release":true, "cycle":0 }
   },
   "hold": {
     "a": { "type":"cycle", "mod":"", "key":["a","b","c"], "release":true, "cycle":0 }

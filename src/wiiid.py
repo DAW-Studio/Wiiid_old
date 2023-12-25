@@ -32,7 +32,7 @@ class Wiiid:
 
         if not self.connect():
             sys.exit()
-        self.scene = MainScene(self.screen)
+        self.mainScene = MainScene(self.screen)
         self.rumble()
         self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
         self.buttons = {
@@ -55,7 +55,7 @@ class Wiiid:
     def run(self):
         while True:
             self.screen.fill((0,0,0))
-            self.scene.render()
+            self.mainScene.render()
 
             btnState = self.wii.state["buttons"]
             for btn in self.buttons:
@@ -83,7 +83,7 @@ class Wiiid:
             elif shortcut["type"] == "function":
                 functions[shortcut["func"]](*shortcut["args"])
         except KeyError as e:
-            self.scene.log(e)
+            self.mainScene.log(e)
 
 
     def rumble(self, seconds:float=0.3):
