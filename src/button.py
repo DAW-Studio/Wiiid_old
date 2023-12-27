@@ -21,8 +21,6 @@ class Button:
         self.tilt = Tilt
 
     def state(self, btnState, accState):
-        if self.wiiid.buttons["home"].value == 1:
-                return self.tilting(accState)
         if (btnState & self.ID):
             if self.value == 0:
                 return self.pressed()
@@ -30,6 +28,8 @@ class Button:
             return self.released()
         if self.holdtime != -1 and time.time() - self.holdtime > 0.5:
             return self.held()
+        if self.wiiid.buttons["home"].value == 1:
+                return self.tilting(accState)
         return None
 
     def holdtap(self):
