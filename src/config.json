@@ -9,11 +9,10 @@
     "a": { "device":"keyboard", "type":"cycle", "mod":["","",""], "key":["a","b","c"], "release":true, "cycle":0 }
   },
   "hold": {
-    "a": { "device":"keyboard", "type":"cycle", "mod":["","",""], "key":["a","b","c"], "release":true, "cycle":0 }
+    "2": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"", "release":false}
   },
   "hold+tap": {
-    "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"a", "release":true },
-    "b,2": {"device":"keyboard", "type":"standard", "mod":"gui","key":"", "release":false}
+    "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"a", "release":true }
   },
   "tilt": {
     "-z": {"device":"mouse", "type":"position_relative", "x":-10, "y":0},
