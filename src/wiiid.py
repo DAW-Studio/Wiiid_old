@@ -1,6 +1,6 @@
 import sys
 import cwiid
-from zero_hid import Keyboard, KeyCodes
+from zero_hid import Keyboard, Mouse, KeyCodes
 import time
 import json
 import os
@@ -16,6 +16,7 @@ from strhid import hid
 pygame.init()
 
 keyboard = Keyboard()
+mouse = Mouse()
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -74,17 +75,23 @@ class Wiiid:
         btn = ",".join(btns)
         try:
             shortcut = self.config[action][btn]
-            if shortcut["type"] == "standard":
-                keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
-            elif shortcut["type"] == "cycle":
-                cycle = shortcut["cycle"]
-                key = shortcut["key"][cycle]
-                mod = shortcut["mod"][cycle]
-                shortcut["cycle"] = cycle+1 if cycle < len(shortcut["key"])-1 else 0
-                self.mainScene.log(cycle)
-                keyboard.press([hid[mod]], hid[key], shortcut["release"])
-            elif shortcut["type"] == "function":
-                functions[shortcut["func"]](*shortcut["args"])
+            if shortcut["device"] == "keyboard":
+                if shortcut["type"] == "standard":
+                    keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
+                elif shortcut["type"] == "cycle":
+                    cycle = shortcut["cycle"]
+                    key = shortcut["key"][cycle]
+                    mod = shortcut["mod"][cycle]
+                    shortcut["cycle"] = cycle+1 if cycle < len(shortcut["key"])-1 else 0
+                    self.mainScene.log(cycle)
+                    keyboard.press([hid[mod]], hid[key], shortcut["release"])
+            elif shortcut["device"] == "mouse":
+                if shortcut["type"] == "position_relative":
+                    self.mainScene.log("position_relative")
+                    mouse.move_relative(shortcut["x"], shortcut["y"])
+            elif shortcut["device"] == None:
+                if shortcut["type"] == "function":
+                    functions[shortcut["func"]](*shortcut["args"])
         except Exception as e:
             self.mainScene.log(e)
 

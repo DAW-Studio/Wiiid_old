@@ -5,7 +5,7 @@
     "left": ["gui","z", true, 0],
     "right": ["gui+shift", "z", true, 0],
     "plus": ["", "rightbracket", true, 0],
-    "minus": { "device":null "type":"function", "func":"restart", "args":[] },
+    "minus": { "device":null, "type":"function", "func":"restart", "args":[] },
     "a": { "device":"keyboard", "type":"cycle", "mod":["","",""], "key":["a","b","c"], "release":true, "cycle":0 }
   },
   "hold": {

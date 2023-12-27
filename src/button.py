@@ -2,6 +2,9 @@ import pygame
 import time
 from util import Image
 
+class Tilt:
+    x: int
+    z: int
 
 class Button:
     def __init__(self, wiiid, ID:int, name:str, value:int=0, holdtime:float=-1):
@@ -15,8 +18,12 @@ class Button:
             self.image = Image(f"buttons/{name}.png", (0,0))
         except:
             self.image = None
+        self.tilt = Tilt
 
     def state(self, btnState):
+        if self.wiiid.buttons["home"].value == 1:
+                accState = self.wiiid.state["acc"]
+                return self.tilting(accState)
         if (btnState & self.ID):
             if self.value == 0:
                 return self.pressed()
@@ -53,6 +60,13 @@ class Button:
         self.holdtime = -1
         self.holding = True
         return ["hold", [self.name]]
+    
+    def tilting(self, acc):
+        z = acc[0]
+        if z < self.tilt.z-5:
+            return ["tilt", ["-z"]]
+        elif z > self.tilt.z+5:
+            return ["tilt", ["+z"]]
 
     def render(self, surface:pygame.Surface):
         if self.value == 1:
