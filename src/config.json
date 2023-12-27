@@ -15,7 +15,7 @@
     "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"a", "release":true }
   },
   "tilt": {
-    "-z": {"device":"mouse", "type":"position_relative", "x":-1, "y":0},
-    "+z": {"device":"mouse", "type":"position_relative", "x":1, "y":0}
+    "-z": {"device":"mouse", "type":"position_relative", "x":-10, "y":0},
+    "+z": {"device":"mouse", "type":"position_relative", "x":10, "y":0}
   }
 }
