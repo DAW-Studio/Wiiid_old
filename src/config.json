@@ -1,19 +1,20 @@
 {
   "tap": {
-    "up": ["", "up", true, 0],
-    "down": ["", "down", true, 0],
-    "left": ["gui","z", true, 0],
-    "right": ["gui+shift", "z", true, 0],
-    "plus": ["", "rightbracket", true, 0],
-    "minus": { "device":null, "type":"function", "func":"restart", "args":[] },
-    "a": { "device":"keyboard", "type":"cycle", "mod":["","",""], "key":["a","b","c"], "release":true, "cycle":0 }
+    "up": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"equal", "release":true},
+    "down": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"minus", "release":true},
+    "left": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"z", "release":true},
+    "right": {"device":"keyboard", "type":"standard", "mod":"gui+shift", "key":"z", "release":true},
+    "a": {"device":"keyboard", "type":"cycle", "mod":["",""], "key":["b","e"], "release":true, "cycle":0 },
+    "minus": {"device":"keyboard", "type":"standard", "mod":"", key":"leftbracket", "release":true},
+    "plus": { "device":"keyboard", "type":"standard", "mod":"", "key":"rightbracket", "release":true}
   },
   "hold": {
+    "b": {"device":"keyboard", "type":"standard", "mod":"alt", "key":"", "release":false},
     "1": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"", "release":false},
     "2": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"", "release":true}
   },
   "hold+tap": {
-    "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"a", "release":true }
+    "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"c", "release":true }
   },
   "tilt": {
     "-z": {"device":"mouse", "type":"position_relative", "x":-10, "y":0},
