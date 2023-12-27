@@ -8,7 +8,8 @@ class RelativeMoveRangeError(Exception):
 
 class Mouse:
     def __init__(self, dev_path='/dev/hidg1') -> None:
-        self.dev = open(dev_path, 'ab+')
+        self.dev = dev_path
+        # self.dev = open(dev_path, 'ab+')
     
     def left_click(self):
         send_mouse_event(self.dev, 0x1, 0, 0, 0, 0)
