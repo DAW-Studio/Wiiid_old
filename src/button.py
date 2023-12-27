@@ -39,6 +39,10 @@ class Button:
         return None
 
     def pressed(self):
+        if self.name == "home":
+            accState = self.wiiid.wii.state["acc"]
+            self.tilt.z = accState[0]
+            self.tilt.x = accState[1]
         self.value = 1
         self.holdtime = time.time()
 
