@@ -9,7 +9,8 @@
     "a": { "device":"keyboard", "type":"cycle", "mod":["","",""], "key":["a","b","c"], "release":true, "cycle":0 }
   },
   "hold": {
-    "2": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"", "release":false}
+    "1": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"", "release":false},
+    "2": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"", "release":true}
   },
   "hold+tap": {
     "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"a", "release":true }
