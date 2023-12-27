@@ -59,9 +59,10 @@ class Wiiid:
             self.mainScene.render()
 
             btnState = self.wii.state["buttons"]
+            accState = self.wii.state["acc"]
             for btn in self.buttons:
                 button = self.buttons[btn]
-                state = button.state(btnState)
+                state = button.state(btnState, accState)
                 if state != None:
                     self.act(*state)
                 button.render(self.screen)

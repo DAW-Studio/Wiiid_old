@@ -20,9 +20,8 @@ class Button:
             self.image = None
         self.tilt = Tilt
 
-    def state(self, btnState):
+    def state(self, btnState, accState):
         if self.wiiid.buttons["home"].value == 1:
-                accState = self.wiiid.state["acc"]
                 return self.tilting(accState)
         if (btnState & self.ID):
             if self.value == 0:
