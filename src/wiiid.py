@@ -61,7 +61,9 @@ class Wiiid:
 
             btnState = self.wii.state["buttons"]
             accState = self.wii.state["acc"]
-            state = self.tilt.state(accState, self.mainScene.log)
+            state = self.tilt.state(accState)
+            self.mainScene.log(state)
+            self.act(*state)
             for btn in self.buttons:
                 button = self.buttons[btn]
                 state = button.state(btnState)
@@ -74,10 +76,10 @@ class Wiiid:
             pygame.display.update()
 
 
-    def act(self, action, btns):
-        btn = ",".join(btns)
+    def act(self, action, args):
+        arg = ",".join(args)
         try:
-            shortcut = self.config[action][btn]
+            shortcut = self.config[action][arg]
             if shortcut["device"] == "keyboard":
                 if shortcut["type"] == "standard":
                     keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])

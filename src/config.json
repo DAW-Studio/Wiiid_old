@@ -17,7 +17,9 @@
     "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"c", "release":true }
   },
   "tilt": {
-    "-z": {"device":"mouse", "type":"position_relative", "x":-10, "y":0},
-    "+z": {"device":"mouse", "type":"position_relative", "x":10, "y":0}
+    "left": {"device":"mouse", "type":"position_relative", "x":-10, "y":0},
+    "right": {"device":"mouse", "type":"position_relative", "x":10, "y":0},
+    "up": {"device":"mouse", "type":"position_relative", "x":0, "y":10},
+    "down": {"device":"mouse", "type":"position_relative", "x":0, "y":-10}
   }
 }
