@@ -20,6 +20,6 @@
     "left": {"device":"mouse", "type":"position_relative", "x":-20, "y":0},
     "right": {"device":"mouse", "type":"position_relative", "x":20, "y":0},
     "up": {"device":"mouse", "type":"position_relative", "x":0, "y":-20},
-    "down": {"device":"mouse", "type":"position_relative", "x":0, "y":100}
+    "down": {"device":"mouse", "type":"position_relative", "x":0, "y":20}
   }
 }
