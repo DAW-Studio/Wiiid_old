@@ -5,8 +5,8 @@
     "left": {"device":"keyboard", "type":"standard", "mod":"gui", "key":"z", "release":true},
     "right": {"device":"keyboard", "type":"standard", "mod":"gui+shift", "key":"z", "release":true},
     "a": {"device":"keyboard", "type":"cycle", "mod":["",""], "key":["b","e"], "release":true, "cycle":0 },
-    "minus": {"device":"keyboard", "type":"standard", "mod":"", "key":"leftbracket", "release":true},
-    "plus": { "device":"keyboard", "type":"standard", "mod":"", "key":"rightbracket", "release":true}
+    "minus": {"device":"mouse", "type":"click", "button":"left"},
+    "plus": { "device":"mouse", "type":"click", "button":"right"}
   },
   "hold": {
     "b": {"device":"keyboard", "type":"standard", "mod":"alt", "key":"", "release":false},

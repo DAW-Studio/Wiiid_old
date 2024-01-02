@@ -90,6 +90,9 @@ class Wiiid:
                         shortcut["cycle"] = cycle+1 if cycle < len(shortcut["key"])-1 else 0
                         keyboard.press([hid[mod]], hid[key], shortcut["release"])
                 elif shortcut["device"] == "mouse":
+                    if shortcut["type"] == "click":
+                        if shortcut["button"] == "left": mouse.left_click()
+                        elif shortcut["button"] == "right": mouse.right_click()
                     if shortcut["type"] == "position_relative":
                         mouse.move_relative(shortcut["x"], shortcut["y"])
                 elif shortcut["device"] == None:
