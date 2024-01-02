@@ -1,7 +1,8 @@
 class Tilt:
     def __init__(self) -> None:
-        pass
+        self.prevState = None
 
     def state(self, accState, log):
-        log(accState)
-        
+        if accState != self.prevState:
+            log(accState)
+            self.prevState = accState
