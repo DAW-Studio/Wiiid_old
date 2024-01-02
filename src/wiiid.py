@@ -94,6 +94,7 @@ class Wiiid:
                 if shortcut["type"] == "position_relative":
                     self.mainScene.log("position_relative")
                     mouse.move_relative(shortcut["x"], shortcut["y"])
+                    mouse.close()
             elif shortcut["device"] == None:
                 if shortcut["type"] == "function":
                     functions[shortcut["func"]](*shortcut["args"])
