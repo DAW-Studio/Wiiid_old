@@ -7,6 +7,7 @@ import os
 import pygame
 from util import Image
 from button import Button
+from tilt import Tilt
 from scenes.connect import ConnectScene
 from scenes.main import MainScene
 from shortcut_functions import functions
@@ -48,6 +49,7 @@ class Wiiid:
             "1": Button(self, cwiid.BTN_1, "1"),
             "2": Button(self, cwiid.BTN_2, "2")
         }
+        self.tilt = Tilt()
         with open(f"{DIR}/config.json") as f:
             self.config = json.load(f)
 
@@ -59,9 +61,10 @@ class Wiiid:
 
             btnState = self.wii.state["buttons"]
             accState = self.wii.state["acc"]
+            state = self.tilt.state(accState, self.mainScene.log)
             for btn in self.buttons:
                 button = self.buttons[btn]
-                state = button.state(btnState, accState)
+                state = button.state(btnState)
                 if state != None:
                     self.act(*state)
                 button.render(self.screen)
