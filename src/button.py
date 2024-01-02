@@ -32,7 +32,7 @@ class Button:
 
     def holdtap(self):
         for btn in self.wiiid.buttons:
-            if self.wiiid.buttons[btn].holding:
+            if self.wiiid.buttons[btn].value == 1:
                 return btn
         return None
 
