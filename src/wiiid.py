@@ -62,7 +62,6 @@ class Wiiid:
             btnState = self.wii.state["buttons"]
             accState = self.wii.state["acc"]
             state = self.tilt.state(accState)
-            self.mainScene.log(state)
             self.act(*state)
             for btn in self.buttons:
                 button = self.buttons[btn]
@@ -88,11 +87,9 @@ class Wiiid:
                     key = shortcut["key"][cycle]
                     mod = shortcut["mod"][cycle]
                     shortcut["cycle"] = cycle+1 if cycle < len(shortcut["key"])-1 else 0
-                    self.mainScene.log(cycle)
                     keyboard.press([hid[mod]], hid[key], shortcut["release"])
             elif shortcut["device"] == "mouse":
                 if shortcut["type"] == "position_relative":
-                    self.mainScene.log("position_relative")
                     mouse.move_relative(shortcut["x"], shortcut["y"])
             elif shortcut["device"] == None:
                 if shortcut["type"] == "function":
