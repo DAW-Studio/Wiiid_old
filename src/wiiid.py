@@ -100,7 +100,8 @@ class Wiiid:
                     if shortcut["type"] == "function":
                         functions[shortcut["func"]](*shortcut["args"])
             except Exception as e:
-                self.mainScene.log(e)
+                pass
+                # self.mainScene.log(e)
 
 
     def rumble(self, seconds:float=0.3):
