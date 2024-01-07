@@ -80,11 +80,12 @@ class Wiiid:
             arg = ",".join(args)
             try:
                 shortcut = self.config[action][arg]
-                self.mainScene.log(shortcut)
                 if shortcut["device"] == "keyboard":
                     if shortcut["type"] == "standard":
+                        self.mainScene.log(shortcut["mod"], shortcut["key"])
                         keyboard.press([hid[shortcut["mod"]]], hid[shortcut["key"]], shortcut["release"])
                     elif shortcut["type"] == "cycle":
+                        self.mainScene.log(shortcut["mod"], shortcut["key"])
                         cycle = shortcut["cycle"]
                         key = shortcut["key"][cycle]
                         mod = shortcut["mod"][cycle]
