@@ -3,19 +3,19 @@
     "a": {"device":"keyboard", "type":"cycle", "mod":["",""], "key":["b","e"], "release":true, "cycle":0 },
     "left": {"device":"keyboard", "type":"standard", "mod":"", "key":"v", "release":true},
     "right": {"device":"keyboard", "type":"standard", "mod":"", "key":"l", "release":true},
-    "plus": {"device":"keyboard", "type":"standard", "mod":"control", "key":"equals", "release":true},
+    "plus": {"device":"keyboard", "type":"standard", "mod":"control", "key":"equal", "release":true},
     "minus": {"device":"keyboard", "type":"standard", "mod":"control", "key":"minus", "release":true}
   },
   "hold": {
     "home": {"device":"keyboard", "type":"standard", "mod":"", "key":"h", "release":false},
     "right": {"device":"keyboard", "type":"standard", "mod":"control", "key":"d", "release":true},
     "minus": { "device":"keyboard", "type":"standard", "mod":"control", "key":"0", "release":true },
-    "plus": { "device":"keyboard", "type":"standard", "mod":"", "key":"r", "release":true },
+    "plus": { "device":"keyboard", "type":"standard", "mod":"", "key":"r", "release":false },
     "1": {"device":"keyboard", "type":"standard", "mod":"control", "key":"", "release":false},
     "2": {"device":"keyboard", "type":"standard", "mod":"shift", "key":"", "release":false}
   },
   "hold+tap": {
-    "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"c", "release":true },
+    "b,a": { "device":"keyboard", "type":"standard", "mod":"", "key":"i", "release":false },
     "b,left": { "device":"keyboard", "type":"standard", "mod":"control", "key":"z", "release":true },
     "b,right": { "device":"keyboard", "type":"standard", "mod":"control+shift", "key":"z", "release":true },
     "b,up": {"device":"keyboard", "type":"standard", "mod":"control+shift", "key":"n", "release":true},
