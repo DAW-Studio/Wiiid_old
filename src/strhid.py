@@ -2,8 +2,7 @@ hid = {
   "": 0,
 
   # MDIFIERS
-  "_control": 0x01,
-  "control": 0x08,
+  "control": 0x01,
   "shift": 0x02,
   "alt": 0x04,
   "gui": 0x08,
