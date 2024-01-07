@@ -7,7 +7,6 @@
     "minus": {"device":"keyboard", "type":"standard", "mod":"control", "key":"minus", "release":true}
   },
   "hold": {
-    "a": {"device":"keyboard", "type":"standard", "mod":"", "key":"i", "release":false},
     "home": {"device":"keyboard", "type":"standard", "mod":"", "key":"h", "release":false},
     "right": {"device":"keyboard", "type":"standard", "mod":"control", "key":"d", "release":true},
     "minus": { "device":"keyboard", "type":"standard", "mod":"control", "key":"0", "release":true },

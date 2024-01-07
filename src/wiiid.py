@@ -76,6 +76,8 @@ class Wiiid:
 
 
     def act(self, action, args):
+        if action == "release":
+            keyboard.release()
         if action != "":
             arg = ",".join(args)
             try:
